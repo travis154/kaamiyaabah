@@ -1,0 +1,131 @@
+extends layout
+
+block content
+	h1=member?"Update information of " + member.business_name : "New Member Registration"
+	section.row
+		section.col-md-6
+			form.form-horizontal(role='form',  parsley-validate, data-data=encodeURIComponent(JSON.stringify(member)))#new-member-form
+						
+				h2 Personal information
+				hr
+				section.form-group
+					label.col-sm-3.control-label Name
+					section.col-sm-9
+						input.form-control(type='text', placeholder='Name', required)#personal_name
+				section.form-group
+					label.col-sm-3.control-label National ID No
+					section.col-sm-9
+						input.form-control(type='text', placeholder='National ID Number', required)#personal_id
+				section.form-group
+					label.col-sm-3.control-label Sex
+					section.col-sm-9
+						section.btn-group(data-toggle='buttons')#personal_sex
+							label.btn.btn-success.active
+								input(type="radio", name="personal_sex")
+								| Male
+							label.btn.btn-success
+								input(type="radio", name="personal_sex")
+								| Female
+				section.form-group
+					label.col-sm-3.control-label Mobile no
+					section.col-sm-9
+						input.form-control(type='number', placeholder='Phone no', required, parsley-minlength="7",parsley-maxlength="7")#personal_mobile
+				section.form-group
+					label.col-sm-3.control-label Permanent Address
+					section.col-sm-9
+						input.form-control(type='text', placeholder='Address', required)#personal_permanent_addr
+				section.form-group
+					label.col-sm-3.control-label Current Address
+					section.col-sm-9
+						input.form-control(type='text', placeholder='Address', required)#personal_current_addr
+				section.form-group
+					label.col-sm-3.control-label Email
+					section.col-sm-9
+						input.form-control(type='email', placeholder='Email', required)#personal_email
+				h2 Business information
+				hr
+				section.form-group
+					label.col-sm-3.control-label Name
+					section.col-sm-9
+						input.form-control(type='text', placeholder='Name', required)#business_name
+				section.form-group
+					label.col-sm-3.control-label Registration Number
+					section.col-sm-9
+						input.form-control(type='text', placeholder='Business Registration Number', required)#business_reg
+				section.form-group
+					label.col-sm-3.control-label Address
+					section.col-sm-9
+						input.form-control(type='text', placeholder='Address', required)#business_addr
+				section.form-group
+					label.col-sm-3.control-label Phone no
+					section.col-sm-9
+						input.form-control(type='number', placeholder='Phone no', required, parsley-minlength="7",parsley-maxlength="7")#business_phone
+				section.form-group
+					label.col-sm-3.control-label Fax
+					section.col-sm-9
+						input.form-control(type='number', placeholder='Fax', required, parsley-minlength="7",parsley-maxlength="7")#business_fax
+				section.form-group
+					label.col-sm-3.control-label Email
+					section.col-sm-9
+						input.form-control(type='email', placeholder='Email', required)#business_email
+				section.form-group
+					label.col-sm-3.control-label Website
+					section.col-sm-9
+						input.form-control(type='text', placeholder='Website', required, parsley-type="url")#business_website
+				section.form-group
+					label.col-sm-3.control-label Type Of Business
+					section.col-sm-9
+						section.btn-group(data-toggle='buttons')#business_type
+							label.btn.btn-success.active
+								input(type="radio", name="business_type", value="Sole Trader")
+								| Sole Trader
+							label.btn.btn-success
+								input(type="radio", name="business_type", value="Local Investment")
+								| Local Investment
+							label.btn.btn-success
+								input(type="radio", name="business_type", value="Company")
+								| Company
+						
+				section.form-group
+					label.col-sm-3.control-label Nature Of Business
+					section.col-sm-9
+						section.btn-group(data-toggle='buttons')#business_nature
+							label.btn.btn-success.active
+								input(type="radio", name="business_nature")
+								| Wholesale
+							label.btn.btn-success
+								input(type="radio", name="business_nature")
+								| Retail
+							label.btn.btn-success
+								input(type="radio", name="business_nature")
+								| Exporter
+							label.btn.btn-success
+								input(type="radio", name="business_nature")
+								| Importer
+						
+				h2 Membership
+				hr									
+				section.form-group
+					label.col-sm-3.control-label Type
+					section.col-sm-9
+						section.btn-group(data-toggle='buttons')#membership
+							label.btn.btn-success.active
+								input(type="radio", name="membership")
+								| Bronze
+							label.btn.btn-success
+								input(type="radio", name="membership")
+								| Silver
+							label.btn.btn-success
+								input(type="radio", name="membership")
+								| Gold
+				-if(member)
+					h2 Actions
+					hr									
+					section.form-group
+						label.col-sm-3.control-label &nbsp;
+						section.col-sm-9
+							button(type='button', data-id=member._id.toString()).btn.btn-default.remove-member Remove this member
+				section.form-group
+					section.col-sm-offset-3.col-sm-9
+						button.btn.btn-info.btn-block(type='submit')=member?"Update" : "Register"
+			

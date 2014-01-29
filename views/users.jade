@@ -1,0 +1,22 @@
+extends layout
+
+block content
+	h1 Users
+	table.table.table-bordered.sortable
+		thead
+			tr
+				th #
+				th Name
+				th Username				
+				th Type
+				th Action
+		tbody
+			-each user,k in users
+				tr
+					td=k+1
+					td=user.name
+					td=user.username
+					td=user.type
+					td
+						button.btn.remove-user(data-id=user._id.toString(), type='button') Remove
+					

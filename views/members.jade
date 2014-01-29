@@ -1,0 +1,24 @@
+extends layout
+
+block content
+	h1 Members
+	table.table.table-bordered.sortable
+		thead
+			tr
+				th #
+				th Business
+				th Person				
+				th Contact
+				th Membership
+				th Joined Date
+		tbody
+			-each member,k in members
+				tr
+					td=k+1
+					td
+						a(href='/members/' + member._id)=member.business_name
+					td=member.personal_name
+					td=member.personal_mobile
+					td=member.membership
+					td=member.time
+					

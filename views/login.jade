@@ -1,0 +1,29 @@
+doctype html
+html
+	head
+		title MTU Members Portal
+		meta(name="robots", content="noindex, nofollow")
+		//link(rel='stylesheet', href='/stylesheets/bootstrap.css')
+		link(rel='stylesheet', href='/css/bootstrap.min.css')
+		style .btn.active{background:gray !important;} body{padding:40px} .wizard-content .control-label{font-size:15px;}.step-content{padding:15px;}			.loading{cursor:progress;}			textarea{width:500px !important; height:150px !important;}
+	body
+
+		section.row
+			section.container(style='margin-top:100px')
+				section.jumbotron
+					h1 Hello, welcome!
+					p Please login to continue
+					-if (typeof msg != 'undefined')
+						p.alert.alert-error
+							small
+								strong(style='color:#666')=msg
+					form(method='post',action='/login', style='margin-top:60px')
+						div.input
+							input(name='username',type='text',style='font-size: 16px;color: black;padding:27px 13px;width: 300px;box-shadow: inset 0 1px 1px #ddd;',placeholder='Username').form-control
+						div.input
+							input(name='password',type='password',style='font-size: 16px;color: black;padding: 27px 13px;width: 300px;box-shadow: inset 0 1px 1px #ddd;',placeholder='Password').form-control
+						div.actions.clearfix
+							br
+							input(value='Log in',type='submit',style='padding: 0.8em 3em;font-weight:bold;font-size:16px').btn.btn-info
+				section.footer
+					p(style='text-align:center;color:#777') &copy; Iulogy

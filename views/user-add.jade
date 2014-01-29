@@ -1,0 +1,36 @@
+extends layout
+
+block content
+	h1 Add user
+	hr
+	section.row
+		section.col-md-9
+			form.form-horizontal(role='form', parsley-validate)#new-user-form
+				section.form-group
+					label.col-sm-3.control-label Full name
+					section.col-sm-5
+						input(type='text', required).form-control#name
+				section.form-group
+					label.col-sm-3.control-label Username
+					section.col-sm-5
+						input(type='text', required).form-control#username
+				section.form-group
+					label.col-sm-3.control-label Password
+					section.col-sm-5
+						p
+							| default password is  
+							strong welcome
+				section.form-group
+					label.col-sm-3.control-label Type
+					section.col-sm-9
+						section.btn-group(data-toggle='buttons')#type
+							label.btn.btn-success.active
+								input(type="radio", name="type", value="Normal")
+								| Normal
+							label.btn.btn-success
+								input(type="radio", name="type", value="Supervisor")
+								| Supervisor
+				section.form-group
+					label.col-sm-3.control-label &nbsp;
+					section.col-sm-5
+						button(type='submit').btn Create User

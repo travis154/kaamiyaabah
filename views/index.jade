@@ -1,0 +1,51 @@
+extends layouthome
+
+block content
+	br
+	br
+	section(style='text-align:center')
+		h1(style='font-weight:lighter;font-size:60px;text-align:center') MMR
+		h1(style='color:green') Members Portal
+	hr
+	section.row
+		section.col-md-8
+			section.row
+				a(href='/members/register').col-md-3.home-task
+					section
+						span.glyphicon.glyphicon-user
+					h4 Add a member
+				a(href='/members').col-md-3.home-task
+					section
+						span.glyphicon.glyphicon-th-list
+					h4 Members
+				a(href='/user/password').col-md-3.home-task
+					section
+						span.glyphicon.glyphicon-floppy-open
+					h4 Change Password
+				-if(usertype == "supervisor")
+					a(href='/sms').col-md-3.home-task
+						section
+							span.glyphicon.glyphicon-pencil
+						h4 Send SMS
+					a(href='/users').col-md-3.home-task
+						section
+							span.glyphicon.glyphicon-th-large
+						h4 Users
+					a(href='/user/add').col-md-3.home-task
+						section
+							span.glyphicon.glyphicon-plus
+						h4 Add User
+				a(href='/logout').col-md-3.home-task
+					section
+						span.glyphicon.glyphicon-minus-sign
+					h4 Logout
+		section.col-md-4
+			section.jumbotron
+				h4 Total Registered Members
+				h3=count
+				hr
+				if(latest_mem)
+					h4 Latest Member
+					h3=latest_mem
+					hr
+

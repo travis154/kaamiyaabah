@@ -1,0 +1,58 @@
+extends layout
+
+block content
+	script retrieveBalance();
+	h1 Send SMS
+	hr
+	section.row
+		section.col-md-9
+			form.form-horizontal(role='form',  parsley-validate, data-data=encodeURIComponent(JSON.stringify(member)))#new-sms-form
+				section.form-group
+					label.col-sm-3.control-label Recipients
+					section.col-sm-9
+						section.btn-group(data-toggle='buttons')#recipient_type
+							label.btn.btn-success.active
+								input(type="radio", name="recipient_type", value="Everyone")
+								| Everyone
+							label.btn.btn-success
+								input(type="radio", name="recipient_type", value="Bronze Members")
+								| Bronze Members
+							label.btn.btn-success
+								input(type="radio", name="recipient_type", value="Silver Members")
+								| Silver Members
+							label.btn.btn-success
+								input(type="radio", name="recipient_type", value="Gold Members")
+								| Gold Members
+	
+				section.form-group
+					label.col-sm-3.control-label Message
+					section.col-sm-9
+						textarea(placeholder='Message', rows="6", required).form-control#sms_message
+				section.form-group
+					label.col-sm-3.control-label &nbsp;
+					section.col-sm-9
+						button(type='submit').btn Send Bulk Message
+			hr
+			h3 SMS Log
+			table.table.table-bordered.sortable
+				thead
+					tr
+						th #
+						th Message
+						th Recipients
+						th Message Count
+						th User
+						th Date
+				tbody
+					-each job,k in jobs
+						tr
+							td=k+1
+							td=job.message
+							td=job.recipients_type
+							td=job.recipients.length
+							td=job.user
+							td=job.time
+		section.col-md-3
+			section.jumbotron
+				h4 Account balance
+				h5#sms_balance
