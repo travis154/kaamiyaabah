@@ -41,11 +41,11 @@ block content
 					h4 Logout
 			section.row
 				hr
+				a(href='/voters').col-md-3.home-task
+					section
+						span.glyphicon.glyphicon-list-alt
+					h4 Voters
 				-if(usertype == "supervisor")
-					a(href='/voters').col-md-3.home-task
-						section
-							span.glyphicon.glyphicon-list-alt
-						h4 Voters
 					a(href='/reports').col-md-3.home-task
 						section
 							span.glyphicon.glyphicon-list-alt
