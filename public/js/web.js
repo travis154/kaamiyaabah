@@ -138,8 +138,41 @@ $(function(){
 			});
 		}
 	});
+	
+	$("#voter-constituency").on('click', 'label', function(){
+		getVoters();
+	});
+	$("#voter-constituency-search").on("keyup", function(e){
+		if(e.keyCode == 13){
+			getVoters();
+		}
+	});
+	$("body").on("click", ".update-survey-mcq label", function(){
+		var field = $(this).parent().data().field;
+		var id = $(this).parent().data().id;
+		var value = $(this).text();
+		$.post("/voters/" + id + "/survey",{field:field, value:value}, function(res){
+			
+		});
+	});
 });
-
+var voterconsxhr;
+function getVoters(options){
+	var island = $("#voter-constituency label.active").text();
+	var search = $("#voter-constituency-search").val();
+	var query = {};
+	
+	if(island){
+		query.island = island;
+	}
+	if(search){
+		query.search = search;
+	}
+	voterconsxhr = $.getJSON("/voters/",query, function(res){
+		var html = jade.render('voterslist', {people:res});
+		$("#voters-listing").html(html);
+	});
+}
 function retrieveBalance(){
 	$.getJSON('/sms/balance', function(res){
 		$("#sms_balance").text(res.balance + " EURO");

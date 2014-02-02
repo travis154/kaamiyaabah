@@ -1,0 +1,44 @@
+extends layout
+
+block content
+	section.row
+		section.col-md-2.col-xs-3
+			img.img-circle(src="http://localhost:8080/" + person.national_id + ".jpg")
+		section.col-md-9.col-xs-8
+			h3 #{person.name} (#{person.national_id})
+			p
+				section=person.dob
+				section=person.address
+	hr
+	section.row
+		section.col-md-6
+			form.form-horizontal(role='form',  parsley-validate, data-data=encodeURIComponent(JSON.stringify(member)))#new-member-form
+				h2 Initial investigation
+				hr
+				section.form-group
+					label.col-sm-3.control-label Votes
+					section.col-sm-9
+						section.btn-group-vertical(data-toggle='buttons', data-field="votes", data-id=person._id.toString()).update-survey-mcq
+							-var list = ["Muaz", "Abdullah Mohamed", "Shiham Waheed", "Harins Ammadey", "Not Voting", "Undecided"]
+							-each item in list
+								label(class=(person.votes == item ? "active" : "") + " btn btn-success")
+									|  #{item}
+									input(type="radio", name="votes")
+				section.form-group
+					label.col-sm-3.control-label Voting instict
+					section.col-sm-9
+						section.btn-group-vertical(data-toggle='buttons', data-field="voting_instinct", data-id=person._id.toString()).update-survey-mcq
+							-var list = ["Best candidate", "Youth Candidate", "Loyalty for party", "Family", "For money / selfishness", "Influenced by 3rd party", "Hatred for another candidate", "For development of the constituency"]
+							-each item in list
+								label(class=(person.voting_instinct == item ? "active" : "") + " btn btn-success")
+									|  #{item}
+									input(type="radio", name="voting_instinct")
+				section.form-group
+					label.col-sm-3.control-label Confirmation
+					section.col-sm-9
+						section.btn-group-vertical(data-toggle='buttons', data-field="confirmation", data-id=person._id.toString()).update-survey-mcq
+							-var list = ["0%", "50%", "100%"]
+							-each item in list
+								label(class=(person.confirmation == item ? "active" : "") + " btn btn-success")
+									|  #{item}
+									input(type="radio", name="confirmation")

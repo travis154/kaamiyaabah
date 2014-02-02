@@ -4,7 +4,7 @@ block content
 	br
 	br
 	section(style='text-align:center')
-		h1(style='font-weight:lighter;font-size:60px;text-align:center') MMR
+		h1(style='font-weight:bold;font-size:60px;text-align:center') MUAZ 2014
 		h1(style='color:green') Members Portal
 	hr
 	section.row
@@ -39,6 +39,18 @@ block content
 					section
 						span.glyphicon.glyphicon-minus-sign
 					h4 Logout
+			section.row
+				hr
+				-if(usertype == "supervisor")
+					a(href='/voters').col-md-3.home-task
+						section
+							span.glyphicon.glyphicon-list-alt
+						h4 Voters
+					a(href='/reports').col-md-3.home-task
+						section
+							span.glyphicon.glyphicon-list-alt
+						h4 Reports
+
 		section.col-md-4
 			section.jumbotron
 				h4 Total Registered Members

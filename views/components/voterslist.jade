@@ -1,0 +1,8 @@
+-each person in people
+	tr
+		td
+			a(href="/voters/" + person._id, target="_blank")=person.name
+		td=person.national_id
+		td=person.dob
+		td=person.address
+		td none

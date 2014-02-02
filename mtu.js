@@ -12,17 +12,21 @@ var LocalStrategy = require('passport-local').Strategy;
 var moment = require('moment');
 var MongoStore = require('connect-mongo')(express);
 var request = require('request');
-  
+var jade_browser = require('jade-browser');
+
 var conf = require('./conf');
 
 var sessionStore = new MongoStore({db:conf.db});
 var Schema = require('./lib/Schema');
 
 //models
-var db = mongoose.connect("mongodb://127.0.0.1/" + conf.db);
+var db = mongoose.createConnection("mongodb://127.0.0.1/" + conf.db);
+var people_db = mongoose.createConnection("mongodb://127.0.0.1/people");
+
 var User = db.model('user', Schema.User);
 var Member = db.model('member', Schema.Member);
 var SMS = db.model('sms', Schema.SMS);
+var People = people_db.model('People', Schema.People);
 
 //create admin user if not exist
 User.createIfNotExists({username:'test', password:'test', name:'Test User', type:'supervisor'});
@@ -71,6 +75,7 @@ app.use(express.session({ secret: conf.cookie_secret, store: sessionStore, cooki
 app.use(passport.initialize());
 app.use(passport.session());
 app.use(require('stylus').middleware({ src: __dirname + '/public' }));
+app.use(jade_browser('/templates.js', '**', {root: __dirname + '/views/components', cache:false}));	
 app.use(app.router);
 app.use(express.static(path.join(__dirname, 'public')));
 
@@ -286,6 +291,43 @@ app.post(
 app.get('/logout', function(req, res){
 	req.logout();
 	res.redirect('/login');
+});
+
+app.get('/voters', authenticate, function(req,res){
+	var options = {};
+	if(!req.xhr){
+		return res.render('voters');
+	}
+	options.island = "Gdh " + req.query.island;
+	if(req.query.search){
+		var q = new RegExp(req.query.search, "i");
+		options.$or = [];
+		options.$or.push({name:q});
+		options.$or.push({national_id:q});
+		options.$or.push({address:q});
+	}
+	People.find(options, function(err, ppl){
+		if(err) throw err;
+		res.json(ppl);
+	});
+});
+app.get('/voters/:id', authenticate, function(req,res){
+	var id = req.params.id;
+	People.findOne({_id:id}, function(err, person){
+		res.render('voter-profile',{person:person});
+	});
+});
+app.post('/voters/:id/survey', authenticate, function(req,res){
+	var field = req.body.field;
+	var value = req.body.value;
+	var id = req.params.id;
+	var update = {$set:{}};
+	update.$set[field] = value.trim();
+	console.log(update);
+	People.update({_id:id},update, function(err, changed){
+		if(err) throw err;
+		res.json(changed);
+	});
 });
 
 http.createServer(app).listen(app.get('port'), function(){
