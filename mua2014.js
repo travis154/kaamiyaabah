@@ -63,7 +63,7 @@ passport.deserializeUser(function(id, done) {
 var app = express();
 
 // all environments
-app.set('port', process.env.PORT || 3036);
+app.set('port', process.env.PORT || 3037);
 app.set('views', __dirname + '/views');
 app.set('view engine', 'jade');
 app.use(express.favicon());
