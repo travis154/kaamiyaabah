@@ -323,7 +323,7 @@ app.post('/voters/:id/survey', authenticate, function(req,res){
 	var id = req.params.id;
 	var update = {$set:{}};
 	update.$set[field] = value.trim();
-	console.log(update);
+	console.log(id);
 	People.update({_id:id},update, function(err, changed){
 		if(err) throw err;
 		res.json(changed);

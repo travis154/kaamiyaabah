@@ -12,9 +12,17 @@ block content
 	hr
 	section.row
 		section.col-md-6
-			form.form-horizontal(role='form',  parsley-validate, data-data=encodeURIComponent(JSON.stringify(member)))#new-member-form
+			section.form-horizontal
 				h2 Initial investigation
 				hr
+				section.form-group
+					label.col-sm-3.control-label Location
+					section.col-sm-9
+						span.btn.btn-primary.update-survey-location(type="text", data-id=person._id.toString(), data-field="address_location") Set this location as current address
+				section.form-group
+					label.col-sm-3.control-label Contact
+					section.col-sm-9
+						input(type="text", value=person.contact_number, placeholder="mobile number", data-id=person._id.toString(), data-field="contact_number").update-survey-text.form-control
 				section.form-group
 					label.col-sm-3.control-label Votes
 					section.col-sm-9

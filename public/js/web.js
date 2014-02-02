@@ -155,7 +155,24 @@ $(function(){
 			
 		});
 	});
+	$("body").on("change", ".update-survey-text", function(){
+		var field = $(this).data().field;
+		var id = $(this).data().id;
+		var value = $(this).val();
+		$.post("/voters/" + id + "/survey",{field:field, value:value}, function(res){
+		});
+	});
+	$("body").on("click", ".update-survey-location", function(){
+		var id = $(this).data().id;
+		navigator.geolocation.getCurrentPosition(function(position) {
+			$.post("/voters/" + id + "/survey",{field:"address_location", value:JSON.stringify(position)}, function(res){
+			
+			});
+		});
+	});
+	$("#load").hide();
 });
+
 var voterconsxhr;
 function getVoters(options){
 	var island = $("#voter-constituency label.active").text();
@@ -168,9 +185,14 @@ function getVoters(options){
 	if(search){
 		query.search = search;
 	}
+	if(voterconsxhr){
+		voterconsxhr.abort();
+	}
+	$("#load").show();
 	voterconsxhr = $.getJSON("/voters/",query, function(res){
 		var html = jade.render('voterslist', {people:res});
 		$("#voters-listing").html(html);
+		$("#load").hide();
 	});
 }
 function retrieveBalance(){
