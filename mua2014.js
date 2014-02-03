@@ -303,7 +303,7 @@ app.get('/logout', function(req, res){
 });
 
 app.get('/voters', authenticate, function(req,res){
-	var options = {};
+	var options = {can_vote:{$ne:false}};
 	if(!req.xhr){
 		return res.render('voters');
 	}
