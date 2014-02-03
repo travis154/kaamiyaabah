@@ -50,3 +50,7 @@ block content
 								label(class=(person.confirmation == item ? "active" : "") + " btn btn-success btn-lg")
 									|  #{item}
 									input(type="radio", name="confirmation")
+				section.form-group
+					label.col-sm-3.control-label Remarks
+					section.col-sm-9
+						textarea.update-survey-text.form-control(data-field="remarks")
