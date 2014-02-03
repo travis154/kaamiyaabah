@@ -6,19 +6,33 @@ block content
 		thead
 			tr
 				th #
-				th Business
-				th Person				
+				th Name				
 				th Contact
-				th Membership
+				th Specialized constituency
+				th Role
+				th Appointed location
 				th Joined Date
 		tbody
 			-each member,k in members
 				tr
 					td=k+1
 					td
-						a(href='/members/' + member._id)=member.business_name
-					td=member.personal_name
+						a(href='/members/' + member._id)=member.personal_name
 					td=member.personal_mobile
-					td=member.membership
+					td
+						-if(member.specialized_constituency)
+							-each loc in member.specialized_constituency
+								a.label.label-primary=loc
+								| &nbsp;
+					td
+						-if(member.role)
+							-each loc in member.role
+								a.label.label-primary=loc
+								| &nbsp;
+					td
+						-if(member.appointed_location)
+							-each loc in member.appointed_location
+								a.label.label-primary=loc
+								| &nbsp;
 					td=member.time
 					

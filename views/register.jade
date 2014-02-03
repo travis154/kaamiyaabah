@@ -41,83 +41,67 @@ block content
 				section.form-group
 					label.col-sm-3.control-label Email
 					section.col-sm-9
-						input.form-control(type='email', placeholder='Email', required)#personal_email
-				h2 Business information
-				hr
+						input.form-control(type='email', placeholder='Email')#personal_twitter
 				section.form-group
-					label.col-sm-3.control-label Name
+					label.col-sm-3.control-label Twitter
 					section.col-sm-9
-						input.form-control(type='text', placeholder='Name', required)#business_name
+						input.form-control(type='text', placeholder='Twitter')#personal_twitter
 				section.form-group
-					label.col-sm-3.control-label Registration Number
+					label.col-sm-3.control-label Facebook
 					section.col-sm-9
-						input.form-control(type='text', placeholder='Business Registration Number', required)#business_reg
-				section.form-group
-					label.col-sm-3.control-label Address
-					section.col-sm-9
-						input.form-control(type='text', placeholder='Address', required)#business_addr
-				section.form-group
-					label.col-sm-3.control-label Phone no
-					section.col-sm-9
-						input.form-control(type='number', placeholder='Phone no', required, parsley-minlength="7",parsley-maxlength="7")#business_phone
-				section.form-group
-					label.col-sm-3.control-label Fax
-					section.col-sm-9
-						input.form-control(type='number', placeholder='Fax', required, parsley-minlength="7",parsley-maxlength="7")#business_fax
-				section.form-group
-					label.col-sm-3.control-label Email
-					section.col-sm-9
-						input.form-control(type='email', placeholder='Email', required)#business_email
-				section.form-group
-					label.col-sm-3.control-label Website
-					section.col-sm-9
-						input.form-control(type='text', placeholder='Website', required, parsley-type="url")#business_website
-				section.form-group
-					label.col-sm-3.control-label Type Of Business
-					section.col-sm-9
-						section.btn-group(data-toggle='buttons')#business_type
-							label.btn.btn-success.active
-								input(type="radio", name="business_type", value="Sole Trader")
-								| Sole Trader
-							label.btn.btn-success
-								input(type="radio", name="business_type", value="Local Investment")
-								| Local Investment
-							label.btn.btn-success
-								input(type="radio", name="business_type", value="Company")
-								| Company
-						
-				section.form-group
-					label.col-sm-3.control-label Nature Of Business
-					section.col-sm-9
-						section.btn-group(data-toggle='buttons')#business_nature
-							label.btn.btn-success.active
-								input(type="radio", name="business_nature")
-								| Wholesale
-							label.btn.btn-success
-								input(type="radio", name="business_nature")
-								| Retail
-							label.btn.btn-success
-								input(type="radio", name="business_nature")
-								| Exporter
-							label.btn.btn-success
-								input(type="radio", name="business_nature")
-								| Importer
-						
-				h2 Membership
+						input.form-control(type='text', placeholder='Facebook')#personal_twitter
+				h2 Roles
 				hr									
 				section.form-group
-					label.col-sm-3.control-label Type
+					label.col-sm-3.control-label Specialized constituency
 					section.col-sm-9
-						section.btn-group(data-toggle='buttons')#membership
+						section.btn-group-vertical(data-toggle='buttons')#specialized_constituency
 							label.btn.btn-success.active
-								input(type="radio", name="membership")
-								| Bronze
+								input(type="checkbox", name="specialized_constituency")
+								| Madaveli
 							label.btn.btn-success
-								input(type="radio", name="membership")
-								| Silver
+								input(type="checkbox", name="specialized_constituency")
+								| Hoadehdhoo
 							label.btn.btn-success
-								input(type="radio", name="membership")
-								| Gold
+								input(type="checkbox", name="specialized_constituency")
+								| Nadella
+				section.form-group
+					label.col-sm-3.control-label Role
+					section.col-sm-9
+						section.btn-group-vertical(data-toggle='buttons')#role
+							label.btn.btn-success.active
+								input(type="checkbox", name="role")
+								| Activist
+							label.btn.btn-success
+								input(type="checkbox", name="role")
+								| Organizer
+							label.btn.btn-success
+								input(type="checkbox", name="role")
+								| Island Incharge
+				section.form-group
+					label.col-sm-3.control-label Appointed location
+					section.col-sm-9
+						section.btn-group-vertical(data-toggle='buttons')#appointed_location
+							label.btn.btn-success.active
+								input(type="checkbox", name="appointed_location")
+								| Madaveli
+							label.btn.btn-success
+								input(type="checkbox", name="appointed_location")
+								| Hoadehdhoo
+							label.btn.btn-success
+								input(type="checkbox", name="appointed_location")
+								| Nadella
+							label.btn.btn-success
+								input(type="checkbox", name="appointed_location")
+								| Male'
+							label.btn.btn-success
+								input(type="checkbox", name="appointed_location")
+								| Hulhumale'
+							label.btn.btn-success
+								input(type="checkbox", name="appointed_location")
+								| Villingili
+
+
 				-if(member)
 					h2 Actions
 					hr									

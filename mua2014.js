@@ -131,9 +131,14 @@ app.get('/members/register', authenticate, function(req,res){
 });
 app.post('/members/register', authenticate, function(req,res){
 	var data = req.body;
+	
+	data.specialized_constituency = JSON.parse(data.specialized_constituency);
+	data.role = JSON.parse(data.role);
+	data.appointed_location = JSON.parse(data.appointed_location);
+	
 	data.ip = req.ip;
 	data.user = req.user.username;
-	data.time = new Date()
+	data.time = new Date();
 	var mem = new Member(data);
 	mem.save(function(err, member){
 		if(err) throw err;
@@ -161,6 +166,9 @@ app.del('/members/:id', authenticate, function(req,res){
 app.post('/members/:id', authenticate, function(req,res){
 	var id = req.params.id;
 	var data = req.body;
+	data.specialized_constituency = JSON.parse(data.specialized_constituency);
+	data.role = JSON.parse(data.role);
+	data.appointed_location = JSON.parse(data.appointed_location);
 	Member.update({_id:id}, data, function(err, member){
 		if(err) throw err;
 		res.json(member);

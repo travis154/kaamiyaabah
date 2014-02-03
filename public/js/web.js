@@ -1,6 +1,6 @@
 $(function(){
 	var reg_form = $("#new-member-form");
-	$(".btn-group label").each(function(){
+	$(".btn-group label,.btn-group-vertical label").each(function(){
 		var self = $(this);
 		var text = self.text();
 		self.attr("data-text", text);
@@ -13,17 +13,24 @@ $(function(){
 			for(var i in data){
 				$("#" + i).val(data[i]);
 			}
-			$("#business_type label").removeClass("active");
-			$("#business_type label[data-text='"+data['business_type']+"']").addClass("active");
-			
-			$("#business_nature label").removeClass("active");
-			$("#business_nature label[data-text='"+data['business_nature']+"']").addClass("active");
-			
 			$("#personal_sex label").removeClass("active");
 			$("#personal_sex label[data-text='"+data['personal_sex']+"']").addClass("active");
+
+			$("#role label").removeClass("active");
+			data['role'].forEach(function(e){
+				$("#role label[data-text='"+e+"']").addClass("active");
+			});
 			
-			$("#membership label").removeClass("active");
-			$("#membership label[data-text='"+data['membership']+"']").addClass("active");	
+			$("#specialized_constituency label").removeClass("active");
+			data['specialized_constituency'].forEach(function(e){
+				$("#specialized_constituency label[data-text='"+e+"']").addClass("active");
+			});
+			
+			$("#appointed_location label").removeClass("active");
+			data['appointed_location'].forEach(function(e){
+				$("#appointed_location label[data-text='"+e+"']").addClass("active");
+			});
+			
 		}
 	}
 	$("form input, form textarea").each(function(){
@@ -45,10 +52,11 @@ $(function(){
 			data.forEach(function(e){
 				obj[e.name] = e.value;
 			});
-			obj.business_type = $("#business_type label.active").text();
-			obj.business_nature = $("#business_nature label.active").text();
 			obj.personal_sex = $("#personal_sex label.active").text();
 			obj.membership = $("#membership label.active").text();
+			obj.specialized_constituency = JSON.stringify($("#specialized_constituency label.active").map(function(){return $(this).text()}).toArray());
+			obj.role = JSON.stringify($("#role label.active").map(function(){return $(this).text()}).toArray());
+			obj.appointed_location = JSON.stringify($("#appointed_location label.active").map(function(){return $(this).text()}).toArray());
 			var url = "/members/register";
 			var update = $("#new-member-form").data().id;
 			if(update){
