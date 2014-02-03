@@ -307,7 +307,9 @@ app.get('/voters', authenticate, function(req,res){
 		options.$or.push({national_id:q});
 		options.$or.push({address:q});
 	}
-	People.find(options, function(err, ppl){
+	People.find(options)
+	.lean()
+	.exec(function(err, ppl){
 		if(err) throw err;
 		res.json(ppl);
 	});
