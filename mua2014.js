@@ -74,6 +74,7 @@ app.use(express.methodOverride());
 app.use(express.session({ secret: conf.cookie_secret, store: sessionStore, cookie: { maxAge: 1000 * 60 * 60 * 7 * 1000 ,httpOnly: false, secure: false}}));
 app.use(passport.initialize());
 app.use(passport.session());
+app.use(express.compress());
 app.use(require('stylus').middleware({ src: __dirname + '/public' }));
 app.use(jade_browser('/templates.js', '**', {root: __dirname + '/views/components', cache:false}));	
 app.use(app.router);
