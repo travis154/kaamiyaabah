@@ -78,28 +78,7 @@ $(function(){
 			})
 		}
 	});
-	$("#new-sms-form").on('submit', function(e){
-		e.preventDefault();
-		var form = $(this);
-		if(form.parsley('isValid')){
-			var data = form.serializeArray();
-			var obj = {};
-			data.forEach(function(e){
-				obj[e.name] = e.value;
-			});
-			obj.recipient_type = $("#recipient_type label.active").text();
-			var url = "/sms";			
-			$.post(url, obj, function(res){
-				if(res.error){
-					return alert(res.error);
-				}
-				alert("Bulk SMS queue started");
-				$("form input").each(function(){
-					$(this).val('');
-				})
-			})
-		}
-	});
+
 	$("#new-user-form").on('submit', function(e){
 		e.preventDefault();
 		var form = $(this);
@@ -178,6 +157,42 @@ $(function(){
 			});
 		});
 	});
+	$("body").on('click', '#recipient_type label', function(){
+		var text = $(this).text();
+		if(text == "Custom"){
+			$("#recipient-toggle-custom").show();
+			$("#recipient-toggle-location").hide();
+		}else{
+			$("#recipient-toggle-custom").hide();
+			$("#recipient-toggle-location").show();
+		}
+	});
+	$("#send-sms").on('click', function(){
+		var message = $("#sms_message").val();
+		var type = $("#recipient_type label.active").text();
+		var recipients;
+		
+		if(type == "Custom"){
+			recipients = $("#custom-recipients").val().split(",")
+		}else if(type == "Members" || type == "Voters"){
+			recipients = $("#recipient-toggle-location label.active").map(function(){return $(this).text()}).toArray();
+		}
+		var post = {};
+		post.message = message;
+		post.type = type;
+		post.recipients = JSON.stringify(recipients);
+		
+		
+		var url = "/sms";			
+		$.post(url, post, function(res){
+			if(res.error){
+				return alert(res.error);
+			}
+			alert("Bulk SMS queue started");
+		})
+
+	});
+	$("#recipient_type label:first").trigger('click');
 	$("#load").hide();
 });
 

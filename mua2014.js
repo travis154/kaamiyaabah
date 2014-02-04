@@ -226,47 +226,56 @@ app.get('/sms', authenticate, function(req,res){
 	});
 });
 app.post('/sms', authenticate, function(req,res){
-	//find recipients based on membership type
-	var recipient_type = req.body.recipient_type;
-	var recipient_type_query = req.body.recipient_type == "Everyone" ? new RegExp('.','g') : req.body.recipient_type.replace("Members", "").trim();
-	Member
-	.find({membership:recipient_type_query},{_id:1, personal_mobile:1})
-	.exec(function(err, recs){
-		if(err) throw err;
-		if(!recs){
-			return res.json({error:'no one to send'});
-		}
-		var data = req.body;
-		data.message = req.body.sms_message;
-		data.ip = req.ip;
-		data.user = req.user.username;
-		data.time = new Date()
-		
-		var sms = new SMS(data);
-		sms.recipients_type = recipient_type
-		sms.recipients = recs;
-		//save dn
-		sms.save(function(err, rec){
-			res.json(rec);
-		});
-		//send sms
-		async.eachLimit(recs, 5, function(item, done){
-			var post = {
-				api_key:conf.nexmo.key,
-				api_secret:conf.nexmo.secret,
-				from:"test",
-				to:"960" + item.personal_mobile,
-				text:data.message
-			}
-			request({
-				url:"https://rest.nexmo.com/sms/json",
-				method:"POST",
-				form:post
-			});		
-		});
-		
+	console.log(req.body);
+	var recipient_type = req.body.type.toLowerCase();
+	var recipients = JSON.parse(req.body.recipients);
+	var data = req.body;
+	var message = req.body.message;
+	
+	data.message = message;
+	data.ip = req.ip;
+	data.user = req.user.username;
+	data.time = new Date()
+	
+	var sms = new SMS(data);
+	sms.recipients_type = recipient_type;
+	sms.recipients = recipients;
+	//save dn
+	sms.save(function(err, rec){
+		res.json(rec);
 	});
+	if(recipient_type == "members" || recipient_type == "voters"){
+
+		return Member
+		.find({appointed_location:{$in:recipients}},{personal_mobile:1})
+		.lean()
+		.exec(function(err, people){
+			var recipients = _.map(people, function(r){return r.personal_mobile});
+			sendsms(message, recipients);
+		});
+	}else{
+		sendsms(message, recipients);
+	}
 });
+
+function sendsms(message, recipients){
+	async.eachLimit(recipients, 5, function(item, done){
+		var post = {
+			api_key:conf.nexmo.key,
+			api_secret:conf.nexmo.secret,
+			from:"MUAZ 2014",
+			to:"960" + item,
+			text:message
+		}
+		request({
+			url:"https://rest.nexmo.com/sms/json",
+			method:"POST",
+			form:post
+		});		
+		return done();	
+	});
+}
+
 app.get('/sms/balance', function(req, res){
 	request({
 		url:"https://rest.nexmo.com/account/get-balance/" + conf.nexmo.key + "/" + conf.nexmo.secret,
