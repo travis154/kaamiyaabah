@@ -343,13 +343,24 @@ app.post('/voters/:id/survey', authenticate, function(req,res){
 	var id = req.params.id;
 	var update = {$set:{}};
 	update.$set[field] = value.trim();
-	console.log(id);
 	People.update({_id:id},update, function(err, changed){
 		if(err) throw err;
 		res.json(changed);
 	});
 });
-
+app.get('/reports', function(req,res){
+	async.auto({
+		madaveli_votes:function(fn){
+			People.aggregate()
+				.match({island:"Gdh Madaveli"})
+				.group({_id:'$votes', val:{$sum:1}})
+				.exec(fn);
+		}
+	},function(err, page){
+		page.madaveli_votes = _.map(page.madaveli_votes, function(e){if(e._id == null){e._id = "Ghost";}return e;});
+		res.render('reports',page);
+	});
+});
 http.createServer(app).listen(app.get('port'), function(){
   console.log('Express server listening on port ' + app.get('port'));
 });
