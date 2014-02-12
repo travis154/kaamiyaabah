@@ -208,7 +208,7 @@ $(function(){
 			r.addClass("hidden-row");
 			row.addClass("display-row");
 			self.siblings().remove();
-			self.attr("colspan",6);
+			self.attr("colspan",7);
 			var html = (jade.render('voter-profile',res));
 			self.html(html);
 			self.removeClass("display-voter");
