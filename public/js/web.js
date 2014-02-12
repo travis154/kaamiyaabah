@@ -126,7 +126,8 @@ $(function(){
 		}
 	});
 	
-	$("#voter-constituency").on('click', 'label', function(){
+	$("#voter-constituency").on('click', 'label', function(e){
+		e.preventDefault();
 		getVoters();
 	});
 	$("#voter-constituency-search").on("keyup", function(e){
