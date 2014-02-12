@@ -194,6 +194,25 @@ $(function(){
 	});
 	$("#recipient_type label:first").trigger('click');
 	$("#load").hide();
+	$("body").on("click", ".display-voter", function(){
+		var self = $(this);
+		var row = self.parent();
+		var id = self.data().id;
+		$(".hidden-row").show().removeClass("hidden-row");
+		$(".display-row").remove();		
+		$.getJSON("/voters/" + id, function(res){
+			var r = row.clone();
+			r.insertAfter(row);
+			r.hide();
+			r.addClass("hidden-row");
+			row.addClass("display-row");
+			self.siblings().remove();
+			self.attr("colspan",6);
+			var html = (jade.render('voter-profile',res));
+			self.html(html);
+			self.removeClass("display-voter");
+		});
+	});
 });
 
 var voterconsxhr;

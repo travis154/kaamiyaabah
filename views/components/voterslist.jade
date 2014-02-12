@@ -1,7 +1,7 @@
 -each person in people
 	tr
-		td
-			a(href="/voters/" + person._id, target="_blank")=person.name
+		td.display-voter(data-id=person._id.toString())
+			span(style="color:rgb(0, 173, 255);cursor:pointer;")=person.name
 		td=person.national_id
 		td=person.dob
 		td=person.address

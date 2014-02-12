@@ -76,7 +76,7 @@ app.use(passport.initialize());
 app.use(passport.session());
 app.use(express.compress());
 app.use(require('stylus').middleware({ src: __dirname + '/public' }));
-app.use(jade_browser('/templates.js', '**', {root: __dirname + '/views/components', cache:false}));	
+app.use(jade_browser('/templates.js', '**', {root: __dirname + '/views/components', cache:false, maxAge:0}));	
 app.use(app.router);
 app.use(express.static(path.join(__dirname, 'public')));
 
@@ -334,7 +334,7 @@ app.get('/voters', authenticate, function(req,res){
 app.get('/voters/:id', authenticate, function(req,res){
 	var id = req.params.id;
 	People.findOne({_id:id}, function(err, person){
-		res.render('voter-profile',{person:person});
+		res.json({person:person});
 	});
 });
 app.post('/voters/:id/survey', authenticate, function(req,res){

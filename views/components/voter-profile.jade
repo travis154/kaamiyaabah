@@ -25,29 +25,29 @@ section
 					label.col-sm-3.control-label Votes
 					section.col-sm-9
 						section.btn-group-vertical(data-toggle='buttons', data-field="votes", data-id=person._id.toString()).update-survey-mcq
-							-var list = ["Muaz", "Abdullah Mohamed", "Abdullah Fahumee", "Shiham Waheed", "Harins Ammadey", "Not Voting", "Undecided"]
-							-each item in list
-								label(class=(person.votes == item ? "active" : "") + " btn btn-success btn-lg")
-									|  #{item}
-									input(type="radio", name="votes")
+							-var listppl = ["Muaz", "Abdullah Mohamed", "Abdullah Fahumee", "Shiham Waheed", "Not Voting", "Undecided"]
+								-each item in listppl
+									label(class=(person.votes == item ? "active" : "") + " btn btn-success")
+										|  #{item}
+										input(type="radio", name="votes")
 				section.form-group
 					label.col-sm-3.control-label Voting instict
 					section.col-sm-9
 						section.btn-group-vertical(data-toggle='buttons', data-field="voting_instinct", data-id=person._id.toString()).update-survey-mcq
 							-var list = ["Best candidate", "Youth Candidate", "Loyalty for party", "Family", "For money / selfishness", "Influenced by 3rd party", "Hatred for another candidate", "For development of the constituency"]
-							-each item in list
-								label(class=(person.voting_instinct == item ? "active" : "") + " btn btn-success btn-lg")
-									|  #{item}
-									input(type="radio", name="voting_instinct")
+								-each item in list
+									label(class=(person.voting_instinct == item ? "active" : "") + " btn btn-success")
+										|  #{item}
+										input(type="radio", name="voting_instinct")
 				section.form-group
 					label.col-sm-3.control-label Confirmation
 					section.col-sm-9
 						section.btn-group-vertical(data-toggle='buttons', data-field="confirmation", data-id=person._id.toString()).update-survey-mcq
 							-var list = ["0%", "50%", "100%"]
-							-each item in list
-								label(class=(person.confirmation == item ? "active" : "") + " btn btn-success btn-lg")
-									|  #{item}
-									input(type="radio", name="confirmation")
+								-each item in list
+									label(class=(person.confirmation == item ? "active" : "") + " btn btn-success")
+										|  #{item}
+										input(type="radio", name="confirmation")
 				section.form-group
 					label.col-sm-3.control-label Remarks
 					section.col-sm-9
