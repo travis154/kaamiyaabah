@@ -76,7 +76,7 @@ app.use(passport.initialize());
 app.use(passport.session());
 app.use(express.compress());
 app.use(require('stylus').middleware({ src: __dirname + '/public' }));
-app.use(jade_browser('/templates.js', '**', {root: __dirname + '/views/components', cache:false, maxAge:0}));	
+app.use(jade_browser('/templates2.js', '**', {root: __dirname + '/views/components', cache:false, maxAge:0}));	
 app.use(app.router);
 app.use(express.static(path.join(__dirname, 'public')));
 
