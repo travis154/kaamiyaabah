@@ -132,9 +132,11 @@ $(function(){
 		},0);
 	});
 	$("#voter-constituency-search").on("keyup", function(e){
-		setTimeout(function(){
-			getVoters();
-		},0);
+		if(e.keyCode == 13){
+			setTimeout(function(){
+				getVoters();
+			},0);
+		}
 	});
 	$("body").on("click", ".update-survey-mcq label", function(){
 		var field = $(this).parent().data().field;
@@ -209,7 +211,7 @@ $(function(){
 			r.addClass("hidden-row");
 			row.addClass("display-row");
 			self.siblings().remove();
-			self.attr("colspan",7);
+			self.attr("colspan",8);
 			var html = (jade.render('voter-profile',res));
 			self.html(html);
 			self.removeClass("display-voter");

@@ -27,6 +27,7 @@ var User = db.model('user', Schema.User);
 var Member = db.model('member', Schema.Member);
 var SMS = db.model('sms', Schema.SMS);
 var People = people_db.model('People', Schema.People);
+var Search = people_db.model('Search', Schema.Search);
 
 //create admin user if not exist
 User.createIfNotExists({username:'test', password:'test', name:'Test User', type:'supervisor'});
@@ -323,8 +324,15 @@ app.get('/voters', authenticate, function(req,res){
 		options.$or.push({name:q});
 		options.$or.push({national_id:q});
 		options.$or.push({address:q});
+		new Search({
+			query:req.query.search,
+			time:new Date(),
+			user:req.user.username,
+			ip:req.ip
+		}).save();
+		
 	}
-	People.find(options)
+	People.find(options,{log:0})
 	.lean()
 	.exec(function(err, ppl){
 		if(err) throw err;
@@ -342,7 +350,15 @@ app.post('/voters/:id/survey', authenticate, function(req,res){
 	var value = req.body.value;
 	var id = req.params.id;
 	var update = {$set:{}};
-	update.$set[field] = value.trim();
+	var val = value.trim();
+	update.$set[field] = val;
+	update.$push = {};
+	update.$push['log'] = {
+		updated:new Date(),
+		field:field,
+		value:val,
+		user:req.user.username
+	};
 	People.update({_id:id},update, function(err, changed){
 		if(err) throw err;
 		res.json(changed);
