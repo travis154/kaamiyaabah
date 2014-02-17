@@ -25,7 +25,7 @@ section
 					label.col-sm-3.control-label Votes
 					section.col-sm-9
 						section.btn-group-vertical(data-toggle='buttons', data-field="votes", data-id=person._id.toString()).update-survey-mcq
-							-var listppl = ["Muaz", "Abdullah Mohamed", "Abdullah Fahumee", "Shiham Waheed", "Not Voting", "Undecided"]
+							-var listppl = ["Riyaz", "Rukuma", "Not Voting", "Undecided"]
 								-each item in listppl
 									label(class=(person.votes == item ? "active" : "") + " btn btn-success")
 										|  #{item}
