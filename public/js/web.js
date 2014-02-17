@@ -127,13 +127,14 @@ $(function(){
 	});
 	
 	$("#voter-constituency").on('click', 'label', function(e){
-		e.preventDefault();
-		getVoters();
+		setTimeout(function(){
+			getVoters();
+		},0);
 	});
 	$("#voter-constituency-search").on("keyup", function(e){
-		if(e.keyCode == 13){
+		setTimeout(function(){
 			getVoters();
-		}
+		},0);
 	});
 	$("body").on("click", ".update-survey-mcq label", function(){
 		var field = $(this).parent().data().field;
@@ -236,6 +237,7 @@ function getVoters(options){
 		var html = jade.render('voterslist', {people:res});
 		$("#voters-listing").html(html);
 		$("#load").hide();
+		$.bootstrapSortable()
 	});
 }
 function retrieveBalance(){
