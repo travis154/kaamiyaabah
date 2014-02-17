@@ -2,23 +2,8 @@ extends layout
 
 block content
 	section.row
-		h1 Projected Votes - Madaveli
-		-each item in madaveli_votes
+		h1 Projected Votes
+		-each item in votes
 			section.col-md-3
 				h3=item._id
 				h1=item.val
-	hr
-	section.row
-		h1 Projected Votes - Nadella
-		-each item in nadella_votes
-			section.col-md-3
-				h3=item._id
-				h1=item.val
-	hr
-	section.row
-		h1 Projected Votes - Hoadehdhoo
-		-each item in hoadehdhoo_votes
-			section.col-md-3
-				h3=item._id
-				h1=item.val
-

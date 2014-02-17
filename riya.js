@@ -21,13 +21,12 @@ var Schema = require('./lib/Schema');
 
 //models
 var db = mongoose.createConnection("mongodb://127.0.0.1/" + conf.db);
-var people_db = mongoose.createConnection("mongodb://127.0.0.1/people");
 
 var User = db.model('user', Schema.User);
 var Member = db.model('member', Schema.Member);
 var SMS = db.model('sms', Schema.SMS);
-var People = people_db.model('People', Schema.People);
-var Search = people_db.model('Search', Schema.Search);
+var People = db.model('People', Schema.People);
+var Search = db.model('Search', Schema.Search);
 
 //create admin user if not exist
 User.createIfNotExists({username:'test', password:'test', name:'Test User', type:'supervisor'});
@@ -64,7 +63,7 @@ passport.deserializeUser(function(id, done) {
 var app = express();
 
 // all environments
-app.set('port', process.env.PORT || 3037);
+app.set('port', process.env.PORT || 3038);
 app.set('views', __dirname + '/views');
 app.set('view engine', 'jade');
 app.use(express.favicon());
@@ -264,7 +263,7 @@ function sendsms(message, recipients){
 		var post = {
 			api_key:conf.nexmo.key,
 			api_secret:conf.nexmo.secret,
-			from:"MUAZ 2014",
+			from:"RIYAZ 2014",
 			to:"960" + item,
 			text:message
 		}
@@ -317,7 +316,6 @@ app.get('/voters', authenticate, function(req,res){
 	if(!req.xhr){
 		return res.render('voters');
 	}
-	options.island = "Gdh " + req.query.island;
 	if(req.query.search){
 		var q = new RegExp(req.query.search, "i");
 		options.$or = [];
@@ -366,28 +364,14 @@ app.post('/voters/:id/survey', authenticate, function(req,res){
 });
 app.get('/reports', function(req,res){
 	async.auto({
-		madaveli_votes:function(fn){
+		votes:function(fn){
 			People.aggregate()
-				.match({island:"Gdh Madaveli"})
-				.group({_id:'$votes', val:{$sum:1}})
-				.exec(fn);
-		},
-		nadella_votes:function(fn){
-			People.aggregate()
-				.match({island:"Gdh Nadella"})
-				.group({_id:'$votes', val:{$sum:1}})
-				.exec(fn);
-		},
-		hoadehdhoo_votes:function(fn){
-			People.aggregate()
-				.match({island:"Gdh Hoadehdhoo"})
+				.match({})
 				.group({_id:'$votes', val:{$sum:1}})
 				.exec(fn);
 		}
 	},function(err, page){
-		page.madaveli_votes = _.map(page.madaveli_votes, function(e){if(e._id == null){e._id = "Ghost";}return e;});
-		page.nadella_votes = _.map(page.nadella_votes, function(e){if(e._id == null){e._id = "Ghost";}return e;});
-		page.hoadehdhoo_votes = _.map(page.hoadehdhoo_votes, function(e){if(e._id == null){e._id = "Ghost";}return e;});
+		page.votes = _.map(page.votes, function(e){if(e._id == null){e._id = "Ghost";}return e;});
 		res.render('reports',page);
 	});
 });
