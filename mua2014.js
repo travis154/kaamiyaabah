@@ -355,9 +355,23 @@ app.get('/reports', function(req,res){
 				.match({island:"Gdh Madaveli"})
 				.group({_id:'$votes', val:{$sum:1}})
 				.exec(fn);
+		},
+		nadella_votes:function(fn){
+			People.aggregate()
+				.match({island:"Gdh Nadella"})
+				.group({_id:'$votes', val:{$sum:1}})
+				.exec(fn);
+		},
+		hoadehdhoo_votes:function(fn){
+			People.aggregate()
+				.match({island:"Gdh Hoadehdhoo"})
+				.group({_id:'$votes', val:{$sum:1}})
+				.exec(fn);
 		}
 	},function(err, page){
 		page.madaveli_votes = _.map(page.madaveli_votes, function(e){if(e._id == null){e._id = "Ghost";}return e;});
+		page.nadella_votes = _.map(page.nadella_votes, function(e){if(e._id == null){e._id = "Ghost";}return e;});
+		page.hoadehdhoo_votes = _.map(page.hoadehdhoo_votes, function(e){if(e._id == null){e._id = "Ghost";}return e;});
 		res.render('reports',page);
 	});
 });
